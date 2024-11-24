@@ -1,5 +1,6 @@
 package org.sang;
 
+import org.sang.models.AuthorDto;
 import org.sang.models.UserDto;
 import org.sang.services.users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @RestController
 public class TestController {
+    @Autowired
+    private AuthorDto authorDto;  // 自动注入 AuthorDto
+
 
    private final IUserService userService;
 
@@ -35,5 +39,10 @@ public class TestController {
             return null;
 
         return users.get(0);
+    }
+    @GetMapping("/getauthor")
+    public AuthorDto getAuthor(){
+
+        return authorDto;
     }
 }
