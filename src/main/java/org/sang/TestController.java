@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -54,31 +56,29 @@ public class TestController {
         return authorDto;
     }
 
+
     @PostMapping("/upload")
-    public String upload(MultipartFile uploadFile, HttpServletRequest request){
-        String realPath=request.getSession().getServletContext().getRealPath("/uploadFile/");
-        String format=new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-        File folder=new File(realPath+format);
-        Boolean isSuccessMake;
-        if(!folder.exists()){
-            isSuccessMake= folder.mkdir();
-            if(!isSuccessMake){
+    public String uploadFile(MultipartFile uploadFile) {
+        if (uploadFile.isEmpty()) {
+            return "上传失败，文件为空";
+        }
 
+        try {
+            String UPLOAD_DIR="uploads";
+            // 项目目录下的文件夹
+            String filePath = new File(System.getProperty("user.dir"), "uploads").getAbsolutePath();
+            File uploadFolder = new File(filePath);
+
+            // 确保文件夹存在
+            if (!uploadFolder.exists()) {
+                uploadFolder.mkdirs();
             }
+            // 保存文件到指定路径
+            uploadFile.transferTo(new File(filePath,uploadFile.getOriginalFilename()));
+            return "文件上传成功，路径：" + filePath;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "上传失败，错误信息：" + e.getMessage();
         }
-
-        String oldName=uploadFile.getOriginalFilename();
-        String newName= UUID.randomUUID().toString()+oldName.substring(oldName.indexOf("."),oldName.length());
-        try{
-
-            uploadFile.transferTo(new File(folder,newName));
-            String filePath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/uploadFile"+format+newName;
-            return  filePath;
-        }catch (Exception exception){
-            exception.printStackTrace();
-        }
-
-        return  "failed";
-
     }
 }

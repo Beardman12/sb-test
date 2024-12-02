@@ -8,7 +8,7 @@
 /httpRequests/
 # 编译输出目录
 target/
-
+uploads/
 # Maven包装器脚本和配置文件
 **/mvnw
 **/mvnw.cmd
