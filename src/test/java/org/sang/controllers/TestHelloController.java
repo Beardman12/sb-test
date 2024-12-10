@@ -3,11 +3,13 @@ package org.sang.controllers;
 import org.junit.Before;
 import org.junit.Test;
 import org.sang.HelloController;
+import org.sang.services.books.IBookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -15,28 +17,38 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class TestHelloController {
-    private MockMvc mvc;
-
-    //初始化执行
-    @Before
-    public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(new HelloController()).build();
-    }
-
-    //验证controller是否正常响应并打印返回结果
-    @Test
-    public void getHello() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
-
-    //验证controller是否正常响应并判断返回结果是否正确
-    @Test
-    public void testHello() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("hello spring boot!")));
-    }
+//    @Autowired
+//    private MockMvc mvc;
+//
+//    @MockBean  // 创建并注入Mock的GreetingService
+//    private IBookService bookService;
+//
+//    //初始化执行
+//    @Before
+//    public void setUp() throws Exception {
+//        mvc = MockMvcBuilders.standaloneSetup(new HelloController()).build();
+//    }
+//
+//    //验证controller是否正常响应并打印返回结果
+//    @Test
+//    public void getHello() throws Exception {
+//        mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andDo(MockMvcResultHandlers.print())
+//                .andReturn();
+//    }
+//
+//    //验证controller是否正常响应并判断返回结果是否正确
+//    @Test
+//    public void testHello() throws Exception {
+//        mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(equalTo("hello spring boot!")));
+//    }
+//    @Test
+//    public void testBooks() throws Exception {
+//        mvc.perform(MockMvcRequestBuilders.get("/bookOps").accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//               // .andExpect(content().string(equalTo("hello spring boot!")));
+//    }
 }

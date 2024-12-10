@@ -1,7 +1,9 @@
 package org.sang;
 
 import org.sang.models.AuthorDto;
+import org.sang.models.Book;
 import org.sang.models.UserDto;
+import org.sang.services.books.IBookService;
 import org.sang.services.users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +28,13 @@ public class TestController {
 
 
    private final IUserService userService;
+   private final IBookService bookService;
 
     @Autowired
-    public  TestController(IUserService userService){
+    public  TestController(IUserService userService,
+                           IBookService bookService){
         this.userService=userService;
+        this.bookService=bookService;
     }
 
     @GetMapping("/test")
@@ -81,4 +86,5 @@ public class TestController {
             return "上传失败，错误信息：" + e.getMessage();
         }
     }
+
 }

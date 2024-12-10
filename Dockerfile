@@ -9,7 +9,7 @@ WORKDIR /app
 # Make sure to replace "your-application.jar" with your actual JAR file name
 COPY target/OA-1.0.1.jar /app/OA-1.0.1.jar
 
-# Expose the application's port (if applicable)
+
 # Replace 8097 with your application's port
 EXPOSE 8097
 
